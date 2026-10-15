@@ -1,0 +1,17 @@
+# Namecheap / Apache configuration for Spoof Caller
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forward /api/call to PHP handler
+  RewriteRule ^api/call/?$ api/call/index.php [L,QSA]
+  RewriteRule ^api/call\.php$ api/call/index.php [L,QSA]
+
+  # Allow direct access to real files and directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route all other URLs to index.html for React SPA
+  RewriteRule ^ index.html [L]
+</IfModule>
